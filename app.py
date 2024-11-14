@@ -1,5 +1,5 @@
 # app.py
-from os 
+import os 
 from flask import Flask, render_template, request
 from Model import predict_spam, accuracy
 
