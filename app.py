@@ -1,4 +1,5 @@
 # app.py
+from os import environ
 from flask import Flask, render_template, request
 from Model import predict_spam, accuracy
 
@@ -33,4 +34,5 @@ def index():
 
 
 if __name__ == '__main__':
+    port = int(environ.get('PORT', 5000))
     app.run(debug=True, port=3000)
