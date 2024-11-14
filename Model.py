@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.metrics import accuracy_score
 
 # Generate a larger synthetic dataset
-X, y = make_classification(n_samples=5000, n_features=4, n_informative=3, n_redundant=1, random_state=42)
+X, y = make_classification(n_samples=1000, n_features=4, n_informative=3, n_redundant=1, random_state=42)
 
 # Convert to DataFrame for consistency with original code
 df = pd.DataFrame(X, columns=['aantal_woorden', 'hoofdletters', 'afzender_onbetrouwbaar', 'aantal_links'])
