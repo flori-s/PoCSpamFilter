@@ -33,9 +33,6 @@ grid_search.fit(X_train, y_train)
 best_params = grid_search.best_params_
 best_score = grid_search.best_score_
 
-print(f"Best Parameters: {best_params}")
-print(f"Best Cross-Validation Score: {best_score}")
-
 # Train the model with the best parameters
 model = RandomForestClassifier(**best_params)
 model.fit(X_train, y_train)
@@ -43,8 +40,6 @@ model.fit(X_train, y_train)
 # Test the model and calculate the accuracy
 y_pred = model.predict(X_test)
 accuracy = accuracy_score(y_test, y_pred)
-print(f"Test Accuracy: {accuracy}")
-
 
 def predict_spam(aantal_woorden, hoofdletters, afzender_onbetrouwbaar, aantal_links):
     new_data = pd.DataFrame([[aantal_woorden, hoofdletters, afzender_onbetrouwbaar, aantal_links]],
