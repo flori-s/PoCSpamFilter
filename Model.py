@@ -14,9 +14,6 @@ X, y = make_classification(n_samples=2000, n_features=4, n_informative=3, n_redu
 df = pd.DataFrame(X, columns=['aantal_woorden', 'hoofdletters', 'afzender_onbetrouwbaar', 'aantal_links'])
 df['is_spam'] = y
 
-# Check data balance
-print(df['is_spam'].value_counts())
-
 # Split the dataset
 X_train, X_test, y_train, y_test = train_test_split(df.drop(columns=['is_spam']), df['is_spam'], test_size=0.2,
                                                     random_state=42)
@@ -55,41 +52,28 @@ joblib.dump(model, 'spam_model.pkl')
 y_pred = model.predict(X_test)
 accuracy = accuracy_score(y_test, y_pred)
 
-print(f"Model accuracy: {accuracy}")
-
 # Evaluate model performance
 conf_matrix = confusion_matrix(y_test, y_pred)
 class_report = classification_report(y_test, y_pred)
-
-print("Confusion Matrix:")
-print(conf_matrix)
-print("\nClassification Report:")
-print(class_report)
 
 # Check feature importance
 feature_importances = model.feature_importances_
 features = ['aantal_woorden', 'hoofdletters', 'afzender_onbetrouwbaar', 'aantal_links']
 importance_df = pd.DataFrame({'Feature': features, 'Importance': feature_importances})
-print("\nFeature Importances:")
-print(importance_df)
 
 
 def predict_spam(aantal_woorden, hoofdletters, afzender_onbetrouwbaar, aantal_links):
     try:
         # Load the trained model
         loaded_model = joblib.load('spam_model.pkl')
-
         # Prepare the new data
         new_data = pd.DataFrame([[aantal_woorden, hoofdletters, afzender_onbetrouwbaar, aantal_links]],
                                 columns=['aantal_woorden', 'hoofdletters', 'afzender_onbetrouwbaar', 'aantal_links'])
         # Standardize the new data
         new_data = scaler.transform(new_data)
-        print(new_data)
         # Make prediction
         prediction = loaded_model.predict(new_data)
-
         # Return the prediction result
         return 'Spam' if prediction[0] == 1 else 'Not Spam'
-
     except Exception as e:
         return f"An error occurred: {e}"
