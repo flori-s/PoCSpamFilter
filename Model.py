@@ -8,7 +8,7 @@ import joblib
 
 # Genereer een synthetische dataset met 2000 voorbeelden
 # We hebben 4 kenmerken (features) en een binaire target variabele (spam of niet-spam)
-X, y = make_classification(n_samples=2000, n_features=4, n_informative=3, n_redundant=1, random_state=42)
+X, y = make_classification(n_samples=1000, n_features=4, n_informative=3, n_redundant=1, random_state=42)
 
 # Zet de gegenereerde features om in een pandas DataFrame voor betere leesbaarheid en consistentie
 df = pd.DataFrame(X, columns=['aantal_woorden', 'hoofdletters', 'afzender_onbetrouwbaar', 'aantal_links'])
