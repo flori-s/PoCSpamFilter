@@ -1,70 +1,96 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-mail Spamfilter</title>
+    <title>Spam Filter</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
             text-align: center;
-            margin-top: 50px;
         }
-
-        form {
-            margin-bottom: 20px;
+        h1 {
+            color: #333;
         }
-
-        input[type="number"], input[type="submit"] {
-            padding: 10px;
-            font-size: 16px;
-            margin: 10px;
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            color: #555;
         }
-
-        .error {
-            color: red;
+        input[type="number"], select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #28a745;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .result, .error {
+            margin-top: 20px;
             font-weight: bold;
         }
-
         .result {
-            font-size: 20px;
-            font-weight: bold;
+            color: #28a745;
         }
-
+        .error {
+            color: #dc3545;
+        }
         .accuracy {
-            font-size: 16px;
-            color: green;
+            margin-top: 20px;
+            color: #333;
         }
     </style>
 </head>
 <body>
-<h1>E-mail Spamfilter met Machine Learning</h1>
-
-<form method="POST">
-    <label for="aantal_woorden">Aantal woorden in de e-mail:</label>
-    <input type="number" id="aantal_woorden" name="aantal_woorden" required><br><br>
-
-    <label for="hoofdletters">Gebruik van hoofdletters (0 = weinig, 1 = veel):</label>
-    <input type="number" id="hoofdletters" name="hoofdletters" min="0" max="1" value="0" required><br><br>
-
-    <label for="afzender_onbetrouwbaar">Afzender onbekend (0 = betrouwbaar, 1 = onbetrouwbaar):</label>
-    <input type="number" id="afzender_onbetrouwbaar" name="afzender_onbetrouwbaar" min="0" max="1" value="0"
-           required><br><br>
-
-    <label for="aantal_links">Aantal links in de e-mail:</label>
-    <input type="number" id="aantal_links" name="aantal_links" required><br><br>
-
-    <input type="submit" value="Voorspel Spam of Geen Spam">
-</form>
-
-{% if error_message %}
-<p class="error">{{ error_message }}</p>
-{% endif %}
-
-{% if result is not none %}
-<p class="result">Voorspelling: {{ result }}</p>
-{% endif %}
-
-<p class="accuracy">Model nauwkeurigheid: {{ accuracy }}%</p>
+    <div class="container">
+        <h1>Spam Filter</h1>
+        <form method="post">
+            <label for="aantal_woorden">Aantal woorden:</label>
+            <input type="number" id="aantal_woorden" name="aantal_woorden" required>
+            <label for="hoofdletters">Hoofdletters:</label>
+            <select id="hoofdletters" name="hoofdletters" required>
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+            <label for="afzender_onbetrouwbaar">Afzender onbetrouwbaar:</label>
+            <select id="afzender_onbetrouwbaar" name="afzender_onbetrouwbaar" required>
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+            <label for="aantal_links">Aantal links:</label>
+            <input type="number" id="aantal_links" name="aantal_links" required>
+            <button type="submit">Voorspel</button>
+        </form>
+        {% if result %}
+            <div class="result">Resultaat: {{ result }}</div>
+        {% endif %}
+        {% if error_message %}
+            <div class="error">Error: {{ error_message }}</div>
+        {% endif %}
+        <div class="accuracy">Model Accuracy: {{ accuracy * 100 }}%</div>
+    </div>
 </body>
 </html>

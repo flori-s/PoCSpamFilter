@@ -1,10 +1,13 @@
 import os
 from flask import Flask, render_template, request
-from Model import predict_spam, accuracy
+from Model import predict_spam
 
 # Maak een Flask-webapplicatie aan
 app = Flask(__name__)
 
+# Read the accuracy from the file
+with open('accuracy.txt', 'r') as f:
+    accuracy = float(f.read())
 
 # Route voor de hoofdpagina, ondersteunt zowel GET als POST verzoeken
 @app.route('/', methods=['GET', 'POST'])
@@ -38,9 +41,7 @@ def index():
     # Render de HTML-pagina en geef de resultaten weer
     return render_template('index.html', result=result, error_message=error_message, accuracy=accuracy)
 
-
 # Start de Flask-applicatie
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))  # Haal de poort op vanuit omgevingsvariabelen of gebruik 5000
-    app.run(host='0.0.0.0',
-            port=port)  # Start de app en laat deze beschikbaar zijn op alle netwerkinstellingen (0.0.0.0)
+    port = int(os.environ.get('PORT', 4000))  # Haal de poort op vanuit omgevingsvariabelen of gebruik 5000
+    app.run(host='0.0.0.0', port=port)  # Start de app en laat deze beschikbaar zijn op alle netwerkinstellingen (0.0.0.0)
